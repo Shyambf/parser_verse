@@ -58,5 +58,5 @@ class Parser:
         return self.ans
 
 
-a = Parser('бородино')
-print(a.verse())
+a = Parser('бородино') # example
+print(a.verse()) # example
