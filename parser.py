@@ -3,7 +3,7 @@ import requests
 
 
 class Parser:
-    def __init__(self, text):
+    def __init__(self, text): # для инициализации класса нужно ввести поисковой текст типо автора ил названия
         self.base_url = 'https://ilibrary.ru'
         self.search = 'https://yandex.ru/search/?text='
         self.text = text
