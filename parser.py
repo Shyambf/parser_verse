@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import re
 
 
 class Parser:
@@ -14,6 +15,7 @@ class Parser:
                     '%FF', '.', '%2C', '+', '%21']
         self.session = requests.session()
         self.pages = 0
+        self.ans = dict()
 
     def code(self):  # кодировка слова
         ans = str()
@@ -30,11 +32,13 @@ class Parser:
         stih = BeautifulSoup(self.session.get(self.base_url + self.second_url).text, 'html.parser')
         a = stih.find('div', class_='author')
         b = stih.find('div', class_='title')
-        self.ans = a.text + b.text
+        self.ans['author'] = a.text
+        self.ans['title'] = b.text
         elements = stih.find('div', id='pmt1')
+        text_in_glava = ''
         for element in elements:
-            self.ans += element.get_text()
-
+            text_in_glava += element.get_text()
+        self.ans['1'] = text_in_glava
         try:
             a = stih.find('div', class_='bnvin')
             self.pages = a.text.split('/')[1].split('Г')[0]
@@ -50,8 +54,10 @@ class Parser:
                 page = self.session.get(url)
                 stih = BeautifulSoup(page.text, 'html.parser')
                 elements = stih.find('div', id='pmt1')
+                text_in_glava = ''
                 for element in elements:
-                    self.ans += element.get_text()
+                    text_in_glava += element.get_text()
+                self.ans[str(i)] = text_in_glava
     
     def verse(self): # выдача стиха
         self.rearch()
@@ -59,4 +65,7 @@ class Parser:
 
 
 a = Parser('бородино')
-print(a.verse())
+b = a.verse()
+
+for key, value in b.items():
+    print(str(key) + '\n\n..........\n', value)
