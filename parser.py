@@ -63,9 +63,5 @@ class Parser:
         self.rearch()
         return self.ans
 
-
-a = Parser('бородино')
-b = a.verse()
-
-for key, value in b.items():
-    print(str(key) + '\n\n..........\n', value)
+a = Parser('бородино') # example
+print(a.verse()) # example
